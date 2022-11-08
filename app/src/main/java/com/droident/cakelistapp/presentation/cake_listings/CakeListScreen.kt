@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -73,57 +70,61 @@ fun CakeListScreen(
     }
 
 
+    Scaffold(
+        topBar = {
+            TopAppBar { /* Top app bar content */ }
+        }
+    ) {
 
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        SwipeRefresh(
-            state = swipeRefreshState,
-            onRefresh = {
-                viewModel.onEvent(CakeListingsEvent.Refresh)
-            },
-            indicator = { state, refreshTrigger ->
-                SwipeRefreshIndicator(
-                    state = state,
-                    refreshTriggerDistance = refreshTrigger,
-                    backgroundColor = Color.Green,
-                    contentColor = Color.DarkGray
-                )
-            },
-
-            ) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.cakes) { cake ->
-                    CakeListItem(
-                        cake = cake,
-                        onItemClick = {
-                            cakeState.value = cake
-                            dialogState.value = true
-
-                        }
+        Box(modifier = Modifier.fillMaxSize()) {
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = {
+                    viewModel.onEvent(CakeListingsEvent.Refresh)
+                },
+                indicator = { state, refreshTrigger ->
+                    SwipeRefreshIndicator(
+                        state = state,
+                        refreshTriggerDistance = refreshTrigger,
+                        backgroundColor = Color.Green,
+                        contentColor = Color.DarkGray
                     )
+                },
+
+                ) {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(state.cakes) { cake ->
+                        CakeListItem(
+                            cake = cake,
+                            onItemClick = {
+                                cakeState.value = cake
+                                dialogState.value = true
+
+                            }
+                        )
 
 
-                    Divider()
+                        Divider()
+                    }
                 }
             }
-        }
-        if (state.error.isNotBlank()) {
-            Text(
-                text = state.error,
-                color = MaterialTheme.colors.error,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .align(Alignment.Center)
-            )
-        }
-        if (state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            if (state.error.isNotBlank()) {
+                Text(
+                    text = state.error,
+                    color = MaterialTheme.colors.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .align(Alignment.Center)
+                )
+            }
+            if (state.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
         }
     }
 }
-
 @Composable
 fun BodyContent(cake: MutableState<Cake>) {
     Text(
