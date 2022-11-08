@@ -72,7 +72,9 @@ fun CakeListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar { /* Top app bar content */ }
+            TopAppBar {
+            Text(text = "CakeApp")
+            /* Top app bar content */ }
         }
     ) {
 
