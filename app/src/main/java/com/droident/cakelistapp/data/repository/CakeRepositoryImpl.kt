@@ -6,8 +6,8 @@ import com.droident.cakelistapp.domain.repository.CakeRepository
 import javax.inject.Inject
 
 class CakeRepositoryImpl @Inject constructor(
-    private val api: CakeApi
-):CakeRepository {
+    private val api: CakeApi,
+) : CakeRepository {
     override suspend fun getCakes(): List<CakeDto> {
         return api.getCakes()
     }

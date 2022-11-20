@@ -6,7 +6,6 @@ import com.droident.cakelistapp.data.repository.CakeRepositoryImpl
 import com.droident.cakelistapp.domain.repository.CakeRepository
 
 
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,19 +18,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-   @Provides
-   @Singleton
-   fun provideCakeApi(): CakeApi {
-       return Retrofit.Builder().baseUrl(Constants.BASE_URL)
-           .addConverterFactory(GsonConverterFactory.create()).
-           build().create(CakeApi::class.java)
-   }
+    @Provides
+    @Singleton
+    fun provideCakeApi(): CakeApi {
+        return Retrofit.Builder().baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create()).build().create(CakeApi::class.java)
+    }
 
-   @Provides
-   @Singleton
-   fun provideCoinRepository(api:CakeApi): CakeRepository{
-       return CakeRepositoryImpl(api)
-   }
+    @Provides
+    @Singleton
+    fun provideCoinRepository(api: CakeApi): CakeRepository {
+        return CakeRepositoryImpl(api)
+    }
 
 
 }

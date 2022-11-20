@@ -7,13 +7,10 @@ import com.google.gson.annotations.SerializedName
 data class CakeDto(
     val desc: String,
     val image: String,
-    val title: String
+    val title: String,
 )
-fun CakeDto.toCake():Cake{
-    return Cake(
-        desc=desc,
-        image=image,
-        title=title
-    )
+
+fun CakeDto.toCake(): Cake {
+    return Cake(desc = desc, image = image, title = title)
 }
 

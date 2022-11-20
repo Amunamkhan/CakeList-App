@@ -30,14 +30,12 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 
 @Composable
-fun CakeListScreen(
+fun CakeListingsScreen(
     navController: NavController,
     viewModel: CakeListViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
-    val swipeRefreshState = rememberSwipeRefreshState(
-        isRefreshing = state.isRefreshing
-    )
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshing)
 
 
     // Dialog state Manager
@@ -54,29 +52,20 @@ fun CakeListScreen(
 
     // Code to Show and Dismiss Dialog
     if (dialogState.value) {
-        Dialog(
-            onDismissRequest = { dialogState.value = false },
-            content = {
-                CompleteDialogContent(cakeState.value.title, dialogState) {
-                    BodyContent(cakeState)
-                }
-            },
-            properties = DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false
-            )
-        )
+        Dialog(onDismissRequest = { dialogState.value = false }, content = {
+            CompleteDialogContent(cakeState.value.title, dialogState) {
+                BodyContent(cakeState)
+            }
+        }, properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false))
 
     }
 
 
-    Scaffold(
-        topBar = {
-            TopAppBar {
+    Scaffold(topBar = {
+        TopAppBar {
             Text(text = "CakeApp")
-            /* Top app bar content */ }
         }
-    ) {
+    }) {
 
         Box(modifier = Modifier.fillMaxSize()) {
             SwipeRefresh(
@@ -85,25 +74,20 @@ fun CakeListScreen(
                     viewModel.onEvent(CakeListingsEvent.Refresh)
                 },
                 indicator = { state, refreshTrigger ->
-                    SwipeRefreshIndicator(
-                        state = state,
+                    SwipeRefreshIndicator(state = state,
                         refreshTriggerDistance = refreshTrigger,
                         backgroundColor = Color.Green,
-                        contentColor = Color.DarkGray
-                    )
+                        contentColor = Color.DarkGray)
                 },
 
                 ) {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(state.cakes) { cake ->
-                        CakeListItem(
-                            cake = cake,
-                            onItemClick = {
-                                cakeState.value = cake
-                                dialogState.value = true
+                        CakeListItem(cake = cake, onItemClick = {
+                            cakeState.value = cake
+                            dialogState.value = true
 
-                            }
-                        )
+                        })
 
 
                         Divider()
@@ -111,15 +95,13 @@ fun CakeListScreen(
                 }
             }
             if (state.error.isNotBlank()) {
-                Text(
-                    text = state.error,
+                Text(text = state.error,
                     color = MaterialTheme.colors.error,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp)
-                        .align(Alignment.Center)
-                )
+                        .align(Alignment.Center))
             }
             if (state.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -127,12 +109,10 @@ fun CakeListScreen(
         }
     }
 }
+
 @Composable
 fun BodyContent(cake: MutableState<Cake>) {
-    Text(
-        text = cake.value.desc,
-        fontSize = 22.sp
-    )
+    Text(text = cake.value.desc, fontSize = 22.sp)
 }
 
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.droident.cakelistapp.presentation.cake_listings.CakeListScreen
+import com.droident.cakelistapp.presentation.cake_listings.CakeListingsScreen
 import com.droident.cakelistapp.presentation.ui.theme.CakeListAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,22 +18,20 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //Todo need to add topbar
         setContent {
             CakeListAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
                     //Todo need to remove this it added for navigation
-                    var navController = rememberNavController()
+                    val navController = rememberNavController()
                     NavHost(navController = navController,
                         startDestination = Screen.CakeListScreen.route
                     ) {
-                        composable(route=Screen.CakeListScreen.route){
-                           CakeListScreen(navController)
+                        composable(route = Screen.CakeListScreen.route) {
+                            CakeListingsScreen(navController)
                         }
                     }
-
                 }
             }
         }
