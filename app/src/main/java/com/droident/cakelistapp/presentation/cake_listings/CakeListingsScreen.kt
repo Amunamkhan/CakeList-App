@@ -32,7 +32,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun CakeListingsScreen(
     navController: NavController,
-    viewModel: CakeListViewModel = hiltViewModel(),
+    viewModel: CakeListingsViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshing)

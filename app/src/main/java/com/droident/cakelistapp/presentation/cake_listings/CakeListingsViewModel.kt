@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class CakeListViewModel @Inject constructor(
+class CakeListingsViewModel @Inject constructor(
     private val getCakeUseCase: GetCakes,
 ) : ViewModel() {
 
